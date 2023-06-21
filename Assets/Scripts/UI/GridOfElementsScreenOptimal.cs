@@ -1,16 +1,16 @@
-
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Gallery
 {
     [RequireComponent(typeof(GridLayoutGroup))]
-    public class ImageGrid : MonoBehaviour
+    public class GridOfElementsScreenOptimal : MonoBehaviour
     {
         [SerializeField] private GameObject _gridElement;
         [SerializeField] private Canvas _canvas;
 
-
+        [SerializeField] private List<Sprite> _images;
 
         private GridLayoutGroup _gridLayoutGroup;
 
@@ -49,19 +49,26 @@ namespace Gallery
                     break;
             }
          
-            for (int i = 0; i < rows * columns*2; i++) 
+            for (int i = 0; i < rows * columns; i++) 
             {
-                Instantiate(_gridElement, _gridLayoutGroup.transform);
+                SpawnElement();
             }
         }
 
-        public void Test(Vector2 vector)
+
+        private void SpawnElement()
         {
-            if (vector.y <= 0)
+            Instantiate(_gridElement, _gridLayoutGroup.transform);
+        }
+
+
+        public void OnGridInteraction(Vector2 position)
+        {
+            if (position.y <= 0)
             {
-                Instantiate(_gridElement, _gridLayoutGroup.transform);
-                Instantiate(_gridElement, _gridLayoutGroup.transform);
+                SpawnElement();
             }
         }
+        
     }
 }
