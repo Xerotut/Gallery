@@ -11,7 +11,7 @@ namespace Gallery
 
         static WebUtility()
         {
-            Application.wantsToQuit += AbortInProgressRequests;
+            Application.quitting += AbortInProgressRequests;
         }
 
         private static Dictionary<UnityWebRequest, UnityWebRequestAsyncOperation> _requests = new Dictionary<UnityWebRequest, UnityWebRequestAsyncOperation>();
@@ -53,15 +53,15 @@ namespace Gallery
             
         }
 
-        private static bool AbortInProgressRequests()
+        private static void AbortInProgressRequests()
         {
             foreach(var request in _requests)
             {
-                request.Value.completed -= _asyncOperations[request.Value] ;
+                request.Value.completed -= _asyncOperations[request.Value];
                 request.Key.Abort();
-                HandleFinishedRequest(request.Key);
             }
-            return true;
+            _requests.Clear();
+            _asyncOperations.Clear();
         }
 
         private static void HandleFinishedRequest(UnityWebRequest request)
