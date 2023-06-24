@@ -702,8 +702,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1053503155}
   - component: {fileID: 1053503156}
-  - component: {fileID: 1053503157}
   - component: {fileID: 1053503158}
+  - component: {fileID: 1053503159}
+  - component: {fileID: 1053503157}
   m_Layer: 5
   m_Name: Grid
   m_TagString: Untagged
@@ -727,7 +728,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0006713867}
+  m_AnchoredPosition: {x: 8.5, y: 0.0006713867}
   m_SizeDelta: {x: 17, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1053503156
@@ -766,9 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89046e1c152c32a4fbc74bd7513f3351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridElement: {fileID: 6420048486959708600, guid: de8a5173dd80c914c93653064e4c6f7f, type: 3}
   _canvas: {fileID: 0}
-  _images: []
 --- !u!114 &1053503158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -783,6 +782,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &1053503159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053503154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01565783c73ba2429594e234503a9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _element: {fileID: -4454836249499141174, guid: de8a5173dd80c914c93653064e4c6f7f, type: 3}
+  _elementContainer: {fileID: 0}
+  _requestor: {fileID: 1462695831}
 --- !u!1 &1194515916
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,6 +935,7 @@ GameObject:
   - component: {fileID: 1462695830}
   - component: {fileID: 1462695829}
   - component: {fileID: 1462695828}
+  - component: {fileID: 1462695831}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -980,9 +995,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1053503157}
-        m_TargetAssemblyTypeName: Gallery.GridOfElementsScreenOptimal, Assembly-CSharp
-        m_MethodName: OnGridInteraction
+      - m_Target: {fileID: 1462695831}
+        m_TargetAssemblyTypeName: Gallery.VerticalScrollElementRequestor, Assembly-CSharp
+        m_MethodName: CheckIfMoreElementsRequired
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1030,6 +1045,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462695826}
   m_CullTransparentMesh: 1
+--- !u!114 &1462695831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462695826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 465ffccf106102b4b8d40511d3ccf047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _availableSpaceCalculator: {fileID: 1053503157}
 --- !u!1 &1578848765
 GameObject:
   m_ObjectHideFlags: 0
