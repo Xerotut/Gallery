@@ -24,8 +24,7 @@ namespace Gallery
             OnConnectionLost += CheckForConnection;
         }
 
-        private static HashSet<UnityWebRequest> _requests = new HashSet<UnityWebRequest>();
-        //private static HashSet<UnityWebRequest> _requests = new HashSet<UnityWebRequest>();
+        private readonly static HashSet<UnityWebRequest> _requests = new HashSet<UnityWebRequest>();
 
 
         public static void CheckIfPageExists(string url, Action<UnityWebRequest> callback)
@@ -45,14 +44,13 @@ namespace Gallery
             OnDownloadStart?.Invoke();
             try
             {
-
-                Action<AsyncOperation> onRequestCompleteHandler = operation =>
+                void OnRequestCompleteHandler(AsyncOperation operation)
                 {
                     HandleWebRequestResult(operation, callback);
                     HandleFinishedRequest(request);
-                };
+                }
 
-                request.SendWebRequest().completed += onRequestCompleteHandler;
+                request.SendWebRequest().completed += OnRequestCompleteHandler;
                 _requests.Add(request);
             }
             catch (Exception e)
@@ -77,28 +75,19 @@ namespace Gallery
                         OnConnectionLost?.Invoke();
                         UnityWebRequest storedRequest = new UnityWebRequest(request.url, request.method, request.downloadHandler, request.uploadHandler);
 
-                        Action OnContinueRequest = null;
-                        OnContinueRequest = () =>
+                        void OnContinueRequest() 
                         {
-
                             SendRequest(storedRequest, callback);
                             OnConnectionRestored -= OnContinueRequest;
-                        };
+                        }
+                        
                         OnConnectionRestored += OnContinueRequest;
-
                         return;
                     }
                 }
-
-
-                try
-                {
-                    callback?.Invoke(request);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(e);
-                }
+                
+                callback?.Invoke(request);
+               
             }
            
         }
