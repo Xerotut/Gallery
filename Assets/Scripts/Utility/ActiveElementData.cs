@@ -9,6 +9,6 @@ namespace Gallery
     {
         public Sprite ElementSprite;
 
-        public string Url;
+        [ field: SerializeField] public Sprite ErrorImage {get; private set;}
     }
 }

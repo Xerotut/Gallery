@@ -1,16 +1,16 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Gallery
 {
     public class SceneLoader : MonoBehaviour
     {
 
-        [SerializeField] string _sceneName;
+        [SerializeField] private string _sceneName;
+        [SerializeField] private bool _useLoadingScreen;
 
         public void LoadScene()
         {
-            SceneManager.LoadScene(_sceneName);
+            SceneLoadManager.LoadScene(_sceneName, _useLoadingScreen);
         }
     }
 }

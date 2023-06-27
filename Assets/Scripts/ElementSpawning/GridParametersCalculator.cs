@@ -29,6 +29,10 @@ namespace Gallery
         {
             _gridLayoutGroup = GetComponent<GridLayoutGroup>();
             if (_canvas == null) _canvas = GetComponentInParent<Canvas>();
+        }
+
+        private void Start()
+        {
             CalculateScreenParams();
             CalculateGridParameters();
         }

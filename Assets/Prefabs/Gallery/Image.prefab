@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: ViewScene
+  _useLoadingScreen: 0
 --- !u!114 &4528105587903442999
 MonoBehaviour:
   m_ObjectHideFlags: 0

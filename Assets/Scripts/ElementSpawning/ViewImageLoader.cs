@@ -9,8 +9,6 @@ namespace Gallery
     {
         [SerializeField] private ActiveElementData _passedData;
 
-        private string _url;
-
         private Sprite _sprite;
 
         private Image _image;
@@ -19,14 +17,19 @@ namespace Gallery
         {
             _image = GetComponent<Image>();
 
-            _url = _passedData.Url;
 
-            if (_passedData.ElementSprite != null)
+            if (_passedData.ElementSprite == null)
             {
-                _sprite = _passedData.ElementSprite;
-                _image.sprite = _sprite;
-                return;
+                _sprite = _passedData.ErrorImage;
+                Debug.LogError("No image was passed!");
             }
+            else
+            {
+                Debug.Log(_passedData.ElementSprite.name);
+                _sprite = _passedData.ElementSprite;
+            }
+            _image.sprite = _sprite;
+
 
             //donwload image if no sprite
         }
