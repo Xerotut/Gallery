@@ -9,6 +9,8 @@ namespace Gallery
     public static class WebUtility
     {
 
+
+
         static WebUtility()
         {
             Application.quitting += AbortInProgressRequests;

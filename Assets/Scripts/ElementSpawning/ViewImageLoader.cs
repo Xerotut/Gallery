@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Gallery
 {
-    public class ImageLoader : MonoBehaviour
+    public class ViewImageLoader : MonoBehaviour
     {
         [SerializeField] private ActiveElementData _passedData;
 
