@@ -19,6 +19,7 @@ namespace Gallery
         {
             _image = GetComponent<Image>();
             _sceneLoader = GetComponent<SceneLoader>();
+            _image.preserveAspect = true;
         }
 
        

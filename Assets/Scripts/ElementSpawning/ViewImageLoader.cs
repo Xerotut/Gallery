@@ -16,7 +16,7 @@ namespace Gallery
         private void Awake()
         {
             _image = GetComponent<Image>();
-
+            _image.preserveAspect = true;
 
             if (_passedData.ElementSprite == null)
             {
@@ -25,7 +25,6 @@ namespace Gallery
             }
             else
             {
-                Debug.Log(_passedData.ElementSprite.name);
                 _sprite = _passedData.ElementSprite;
             }
             _image.sprite = _sprite;
