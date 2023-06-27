@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace Gallery
@@ -16,17 +13,22 @@ namespace Gallery
 
         private SceneLoader _sceneLoader;
 
+        private Image _image;
+
         private void Start()
         {
+            _image = GetComponent<Image>();
             _sceneLoader = GetComponent<SceneLoader>();
         }
 
        
         public void PerformOnClickAction()
         {
-            _dataContainer.ElementSprite = GetComponent<Image>().sprite;
-
-            _sceneLoader.LoadScene();
+            if (_image.sprite != null)
+            {
+                _dataContainer.ElementSprite = _image.sprite;
+                _sceneLoader.LoadScene();
+            }
         }
     }
 }

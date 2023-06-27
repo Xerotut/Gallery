@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Gallery
 {
@@ -22,26 +23,30 @@ namespace Gallery
             for (int i = imagesPresent+1; i<= imagesPresent + numberOfImagesRequested; i++)
             {
                 string url = WebUtility.AssembleURL(new string[] { _urlDomain, i.ToString(), ".jpg"});
-                Debug.Log(url);
-                WebUtility.CheckIfPageExists(url, elementExists => SatisfyRequest(elementExists, requestor, url));
+                WebUtility.CheckIfPageExists(url, request => SatisfyRequest(request, requestor, url));
                 
             }
         }
 
-        private void SatisfyRequest(bool isElementExist, IImageRequestor requestor, string url)
+        private void SatisfyRequest(UnityWebRequest request, IImageRequestor requestor, string url)
         {
-            requestor.OnRequestAnswered(isElementExist);
-            Debug.Log(isElementExist);
-            if (!isElementExist) return;
+            if (request.responseCode !=200) 
+            {
+                requestor.OnRequestAnswered(false);
+                return;
+            }
+            requestor.OnRequestAnswered(true);
+            WebUtility.DownloadTexture2D(url, request => OnTextureDownload(request, requestor));
 
-            WebUtility.DownloadTexture2D(url, texture => OnTextureDownload(texture, requestor));
         }
 
-        private void OnTextureDownload(Texture2D texture, IImageRequestor requestor)
+        private void OnTextureDownload(UnityWebRequest request, IImageRequestor requestor)
         {
+            Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
             if (texture== null)
             {
                 requestor.OnSpriteReady(_errorImage);
+                return;
             }
             Sprite newSprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             requestor.OnSpriteReady(newSprite);

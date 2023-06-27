@@ -24,6 +24,7 @@ namespace Gallery
         private void Start()
         {
             RequestImage(_availableSpaceCalculator.ScreenOverallAvailableSpace());
+            _canRequest = false;
         }
 
 
@@ -49,7 +50,6 @@ namespace Gallery
         {
             GameObject newImageObject = Instantiate(_imageGameObject, _imageObjectsContainer);
             Image image = newImageObject.GetComponent<Image>();
-            Debug.Log(image.name);
             _imagesInProgress.Enqueue(image);
             _canRequest = true;
         }
