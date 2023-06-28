@@ -45,26 +45,26 @@ namespace Gallery
             _cellWidth = (int)_gridLayoutGroup.cellSize.x;
             _cellHeight = (int)_gridLayoutGroup.cellSize.y;
 
-            if (!_forceParticularOriantationCalculation)
+            if (_forceParticularOriantationCalculation)
             {
-                _screenWidth = (int)(Screen.width / _canvas.scaleFactor);
-                _screenHeight = (int)(Screen.height / _canvas.scaleFactor);
-                return;
+                if (_forcedOrientation == ScreenOrientation.Portrait || _forcedOrientation == ScreenOrientation.PortraitUpsideDown)
+                {
+                    _screenWidth = Mathf.Min(Screen.width, Screen.height);
+                    _screenHeight = Mathf.Max(Screen.width, Screen.height);
+                    return;
+                }
+                if (_forcedOrientation == ScreenOrientation.Landscape || _forcedOrientation == ScreenOrientation.LandscapeLeft
+                    || _forcedOrientation == ScreenOrientation.LandscapeRight)
+                {
+                    _screenWidth = Mathf.Max(Screen.width, Screen.height);
+                    _screenHeight = Mathf.Min(Screen.width, Screen.height);
+                    return;
+                }
             }
+            //This will happen if orientation is not forced, or it is forced with AutoRotation value
+            _screenWidth = (int)(Screen.width / _canvas.scaleFactor);
+            _screenHeight = (int)(Screen.height / _canvas.scaleFactor);
 
-            if (_forcedOrientation == ScreenOrientation.Portrait)
-            {
-                _screenWidth = Mathf.Min(Screen.width, Screen.height);
-                _screenHeight = Mathf.Max(Screen.width, Screen.height);
-                return;
-            }
-            if (_forcedOrientation == ScreenOrientation.Landscape)
-            {
-                _screenWidth = Mathf.Max(Screen.width, Screen.height);
-                _screenHeight = Mathf.Min(Screen.width, Screen.height);
-            }
-
-          
         }
 
         private void CalculateGridParameters()

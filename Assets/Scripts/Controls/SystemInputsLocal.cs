@@ -12,15 +12,14 @@ namespace Gallery
         {
         }
 
-        [SerializeField] private PreviousSceneOptions _backButtonOption;
-        
-        private SceneLoader _sceneToLoadData;
+        [SerializeField] private GoToPreviousSceneVariants _backButtonOption;
+        [SerializeField] private SceneLoader _sceneToLoadData;
 
         private void ReturnToPreviousScene()
         {
             switch (_backButtonOption)
             {
-                case PreviousSceneOptions.IndexBased:
+                case GoToPreviousSceneVariants.IndexBased:
                     int currentSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
                     if (currentSceneBuildIndex > 0)
                     {
@@ -29,8 +28,7 @@ namespace Gallery
                     }
                     Application.Quit();
                     break;
-                case PreviousSceneOptions.CustomSceneLoader:
-                    _sceneToLoadData = GetComponent<SceneLoader>();
+                case GoToPreviousSceneVariants.CustomSceneLoader:
                     if (_sceneToLoadData == null)
                     {
                         Debug.LogError("No Scene Loader attached");
@@ -38,7 +36,7 @@ namespace Gallery
                     }
                     _sceneToLoadData.LoadScene();
                     break;
-                case PreviousSceneOptions.Exit:
+                case GoToPreviousSceneVariants.Exit:
                     Application.Quit();
                     break;
             }

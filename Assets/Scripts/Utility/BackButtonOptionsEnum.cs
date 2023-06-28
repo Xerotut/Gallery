@@ -1,4 +1,4 @@
-public enum PreviousSceneOptions
+public enum GoToPreviousSceneVariants
 {
     IndexBased,
     CustomSceneLoader,
