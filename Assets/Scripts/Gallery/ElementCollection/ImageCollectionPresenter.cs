@@ -22,7 +22,7 @@ namespace Gallery
         {
             for (int i = imagesPresent+1; i<= imagesPresent + numberOfImagesRequested; i++)
             {
-                string url = WebUtility.AssembleURL(new string[] { _urlDomain, i.ToString(), ".jpg"});
+                string url = WebUtilityUrl.AssembleURL(new string[] { _urlDomain, i.ToString(), ".jpg"});
                 WebUtility.CheckIfPageExists(url, request => SatisfyRequest(request, view, url));
                 
             }

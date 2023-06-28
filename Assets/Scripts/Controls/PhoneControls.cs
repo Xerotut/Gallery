@@ -15,7 +15,7 @@ public class @PhoneControls : IInputActionCollection, IDisposable
     ""name"": ""PhoneControls"",
     ""maps"": [
         {
-            ""name"": ""PhoneActions"",
+            ""name"": ""SystemActions"",
             ""id"": ""b26779a1-6635-442b-986f-ab3eacd2f6d5"",
             ""actions"": [
                 {
@@ -63,10 +63,10 @@ public class @PhoneControls : IInputActionCollection, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // PhoneActions
-        m_PhoneActions = asset.FindActionMap("PhoneActions", throwIfNotFound: true);
-        m_PhoneActions_Back = m_PhoneActions.FindAction("Back", throwIfNotFound: true);
-        m_PhoneActions_TouchInput = m_PhoneActions.FindAction("TouchInput", throwIfNotFound: true);
+        // SystemActions
+        m_SystemActions = asset.FindActionMap("SystemActions", throwIfNotFound: true);
+        m_SystemActions_Back = m_SystemActions.FindAction("Back", throwIfNotFound: true);
+        m_SystemActions_TouchInput = m_SystemActions.FindAction("TouchInput", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -113,34 +113,34 @@ public class @PhoneControls : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // PhoneActions
-    private readonly InputActionMap m_PhoneActions;
-    private IPhoneActionsActions m_PhoneActionsActionsCallbackInterface;
-    private readonly InputAction m_PhoneActions_Back;
-    private readonly InputAction m_PhoneActions_TouchInput;
-    public struct PhoneActionsActions
+    // SystemActions
+    private readonly InputActionMap m_SystemActions;
+    private ISystemActionsActions m_SystemActionsActionsCallbackInterface;
+    private readonly InputAction m_SystemActions_Back;
+    private readonly InputAction m_SystemActions_TouchInput;
+    public struct SystemActionsActions
     {
         private @PhoneControls m_Wrapper;
-        public PhoneActionsActions(@PhoneControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Back => m_Wrapper.m_PhoneActions_Back;
-        public InputAction @TouchInput => m_Wrapper.m_PhoneActions_TouchInput;
-        public InputActionMap Get() { return m_Wrapper.m_PhoneActions; }
+        public SystemActionsActions(@PhoneControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Back => m_Wrapper.m_SystemActions_Back;
+        public InputAction @TouchInput => m_Wrapper.m_SystemActions_TouchInput;
+        public InputActionMap Get() { return m_Wrapper.m_SystemActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PhoneActionsActions set) { return set.Get(); }
-        public void SetCallbacks(IPhoneActionsActions instance)
+        public static implicit operator InputActionMap(SystemActionsActions set) { return set.Get(); }
+        public void SetCallbacks(ISystemActionsActions instance)
         {
-            if (m_Wrapper.m_PhoneActionsActionsCallbackInterface != null)
+            if (m_Wrapper.m_SystemActionsActionsCallbackInterface != null)
             {
-                @Back.started -= m_Wrapper.m_PhoneActionsActionsCallbackInterface.OnBack;
-                @Back.performed -= m_Wrapper.m_PhoneActionsActionsCallbackInterface.OnBack;
-                @Back.canceled -= m_Wrapper.m_PhoneActionsActionsCallbackInterface.OnBack;
-                @TouchInput.started -= m_Wrapper.m_PhoneActionsActionsCallbackInterface.OnTouchInput;
-                @TouchInput.performed -= m_Wrapper.m_PhoneActionsActionsCallbackInterface.OnTouchInput;
-                @TouchInput.canceled -= m_Wrapper.m_PhoneActionsActionsCallbackInterface.OnTouchInput;
+                @Back.started -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnBack;
+                @TouchInput.started -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnTouchInput;
+                @TouchInput.performed -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnTouchInput;
+                @TouchInput.canceled -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnTouchInput;
             }
-            m_Wrapper.m_PhoneActionsActionsCallbackInterface = instance;
+            m_Wrapper.m_SystemActionsActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Back.started += instance.OnBack;
@@ -152,8 +152,8 @@ public class @PhoneControls : IInputActionCollection, IDisposable
             }
         }
     }
-    public PhoneActionsActions @PhoneActions => new PhoneActionsActions(this);
-    public interface IPhoneActionsActions
+    public SystemActionsActions @SystemActions => new SystemActionsActions(this);
+    public interface ISystemActionsActions
     {
         void OnBack(InputAction.CallbackContext context);
         void OnTouchInput(InputAction.CallbackContext context);

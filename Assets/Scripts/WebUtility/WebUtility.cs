@@ -92,17 +92,6 @@ namespace Gallery
 
        
 
-        public static string AssembleURL(string[] urlparts)
-        {
-            string url = "";
-            foreach (string part in urlparts)
-            {
-                url += part;
-            }
-            return url;
-        }
-
-
         private static void AbortInProgressRequests()
         {
             foreach(var request in _requestsInProgress)

@@ -182,7 +182,8 @@ PrefabInstance:
       propertyPath: _sceneScreenOrientation
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 847731332713067209, guid: 52042d62fdd6ef540a91b077e55f165e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 52042d62fdd6ef540a91b077e55f165e, type: 3}
 --- !u!1 &517059797
 GameObject:

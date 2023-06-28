@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1121264169146464091}
   - component: {fileID: 3803338093217265752}
   - component: {fileID: 3868475807792925761}
+  - component: {fileID: 847731332713067209}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -44,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4b33a2fa2097b47a79ca65a8f1be21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _orientationManager: {fileID: 0}
 --- !u!114 &3868475807792925761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,3 +58,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneScreenOrientation: 5
+--- !u!114 &847731332713067209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702871754447620811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0753e95cff66aa84697daa31dc8673a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

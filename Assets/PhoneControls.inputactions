@@ -2,7 +2,7 @@
     "name": "PhoneControls",
     "maps": [
         {
-            "name": "PhoneActions",
+            "name": "SystemActions",
             "id": "b26779a1-6635-442b-986f-ab3eacd2f6d5",
             "actions": [
                 {

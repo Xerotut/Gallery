@@ -208,6 +208,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneManager
       objectReference: {fileID: 0}
+    - target: {fileID: 847731332713067209, guid: 52042d62fdd6ef540a91b077e55f165e, type: 3}
+      propertyPath: _backButtonOption
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1121264169146464091, guid: 52042d62fdd6ef540a91b077e55f165e, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -251,6 +255,10 @@ PrefabInstance:
     - target: {fileID: 1121264169146464091, guid: 52042d62fdd6ef540a91b077e55f165e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868475807792925761, guid: 52042d62fdd6ef540a91b077e55f165e, type: 3}
+      propertyPath: _sceneScreenOrientation
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52042d62fdd6ef540a91b077e55f165e, type: 3}
@@ -402,7 +410,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneName: GalleryScene
   _useLoadingScreen: 1
-  _useProlongedLoadingTime: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
