@@ -79,7 +79,7 @@ namespace Gallery
                         
                         UnityWebRequest storedRequest = new UnityWebRequest(request.url, request.method, request.downloadHandler, request.uploadHandler);
                         _pendingRequests.Add(storedRequest, callback);
-                        if (!LostWebConnectionHandler.TryingToReconnect) LostWebConnectionHandler.ConnectionLost();
+                        LostWebConnectionHandler.ConnectionLost();
                         return;
                     }
                 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Gallery
 {
-    public class VerticalScrollImageSpawner: MonoBehaviour, IImageRequestor
+    public class VerticalScrollImageView: MonoBehaviour, IView
     {
         [SerializeField] private GridParametersCalculator _availableSpaceCalculator;
 

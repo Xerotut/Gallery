@@ -1,0 +1,52 @@
+{
+    "name": "PhoneControls",
+    "maps": [
+        {
+            "name": "PhoneActions",
+            "id": "b26779a1-6635-442b-986f-ab3eacd2f6d5",
+            "actions": [
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "a806fb65-7797-4574-b750-ae40ab876d1d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "TouchInput",
+                    "type": "PassThrough",
+                    "id": "0c49dc4c-f1a1-453c-97da-2b6dc196e287",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8967dc46-de5d-47a1-a6b9-af238e39ffce",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "388d6ae8-7bbe-406e-9d5b-0ed17609f14a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IImageRequestor 
+public interface IView 
 {
     public void OnRequestAnswered(bool isImageExists);
 

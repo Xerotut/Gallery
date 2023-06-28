@@ -15,10 +15,10 @@ namespace Gallery
             Application.quitting += () => tokenSource?.Cancel(); ;
             SceneManager.activeSceneChanged += HandleSceneChange;
 
-            TryingToReconnect = false;
+            _tryingToReconnect = false;
         }
 
-        public static bool TryingToReconnect { get; private set; }
+        private static bool _tryingToReconnect;
 
         private static CancellationTokenSource tokenSource; 
         private static CancellationToken _connectionCheckCancelationToken;
@@ -29,12 +29,15 @@ namespace Gallery
 
         public static void ConnectionLost()
         {
-            OnConnectionLost?.Invoke();
-            TryingToReconnect = true;
+            if (!_tryingToReconnect)
+            {
+                OnConnectionLost?.Invoke();
+                _tryingToReconnect = true;
 
-            _connectionCheckCancelationToken = CreateCancelationToken();
+                _connectionCheckCancelationToken = CreateCancelationToken();
 
-            CheckForConnection(_connectionCheckCancelationToken);
+                CheckForConnection(_connectionCheckCancelationToken);
+            }
         }
 
 
