@@ -27,8 +27,11 @@ namespace Gallery
             };
         }
 
+        //Used to dispose of all requets that are still in progress when the game exits or when the scene is changed.
         private readonly static HashSet<UnityWebRequest> _requestsInProgress = new HashSet<UnityWebRequest>();
 
+
+        //Used by requests that were not delivered due to connection issues.
         private readonly static Dictionary<UnityWebRequest, Action<UnityWebRequest>> _pendingRequests = new Dictionary<UnityWebRequest, Action<UnityWebRequest>>();
 
         public static void CheckIfPageExists(string url, Action<UnityWebRequest> callback)
@@ -91,7 +94,7 @@ namespace Gallery
         }
 
        
-
+        //Used to dispose off all remaining requests when the game exits or the scene is changing
         private static void AbortInProgressRequests()
         {
             foreach(var request in _requestsInProgress)
@@ -106,6 +109,7 @@ namespace Gallery
         private static void HandleFinishedRequest(UnityWebRequest request)
         {
             if (_requestsInProgress.Contains(request)) _requestsInProgress.Remove(request);
+            request.Dispose();
             if (_requestsInProgress.Count == 0)
             {
                 OnDownloadEnd?.Invoke();

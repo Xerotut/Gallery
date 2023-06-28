@@ -17,8 +17,6 @@ namespace Gallery
 
         private readonly Queue<Image> _imagesInProgress = new Queue<Image>();
 
-        private int _imagesRequested =0;
-
         private bool _canRequest = true;
 
         private void Start()
@@ -32,10 +30,11 @@ namespace Gallery
         
         private void RequestImage(int numberOfImages)
         {
-            _imageCollection.RequestImages(_imagesRequested, numberOfImages, this);
-            _imagesRequested += numberOfImages;
+            _imageCollection.RequestImages(numberOfImages, this);
         }
 
+        //Since it requests image from the internet, the user experience is more smooth if an image object is spawn as soon as 
+        //it is confirmed there is an image on the server - the actual image is attached to it later, after the download is finished.
         public void OnRequestAnswered(bool isImageExists)
         {
             if (!isImageExists)
@@ -46,6 +45,7 @@ namespace Gallery
             SpawnImageObject();
         }
 
+        //imageObject has a blank image, which will be filled after 
         private void SpawnImageObject()
         {
             GameObject newImageObject = Instantiate(_imageGameObject, _imageObjectsContainer);
@@ -60,6 +60,7 @@ namespace Gallery
             imageToAssignTo.sprite = sprite;
         }
 
+        // Used by scroll view - this recieves vector2 every time the user drags it. Vector2 is the current position of the scroll view.
         public void CheckIfMoreElementsRequired(Vector2 scrollViewPosition)
         {
             if (scrollViewPosition.y <= 0 && _canRequest)

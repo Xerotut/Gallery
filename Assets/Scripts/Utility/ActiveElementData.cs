@@ -10,5 +10,7 @@ namespace Gallery
         public Sprite ElementSprite;
 
         [ field: SerializeField] public Sprite ErrorImage {get; private set;}
+
+        //Used for transfering sprite between scenes.
     }
 }

@@ -27,6 +27,7 @@ namespace Gallery
         public static event Action OnConnectionLost;
         public static event Action OnConnectionRestored;
 
+        //Used for other scripts to communicate that connection to the internet has been lost.
         public static void ConnectionLost()
         {
             if (!_tryingToReconnect)
@@ -40,13 +41,14 @@ namespace Gallery
             }
         }
 
-
+        // required to refresh token after successfull webrequest - it is the most straightforward to get rid of old token register callback
         private static CancellationToken CreateCancelationToken()
         {
             tokenSource = new CancellationTokenSource();
             return tokenSource.Token;
         }
 
+        //Since this is a static class, making it async is the only way to make it repeat with set intervals of time.
         private static async void CheckForConnection(CancellationToken cancelationToken)
         {
             try

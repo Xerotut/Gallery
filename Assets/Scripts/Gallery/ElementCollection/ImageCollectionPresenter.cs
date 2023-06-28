@@ -14,18 +14,25 @@ namespace Gallery
 
         [SerializeField] private string _urlDomain;
 
-
+        private int _imagesRequested;
         
 
-
-        public void RequestImages(int imagesPresent,int numberOfImagesRequested, IView view)
+        /// <summary>
+        /// A way for a view to request images from this collection. Made it so it firstly checks whether or not the page with the image exists
+        /// and starts downloading only if it does - that allows to spawn image objects as soon as possible and fill them with images later (and also stop spawnning them
+        /// if there is no more images)
+        /// </summary>
+        /// <param name="numberOfImagesRequested"> Number of images view wants to recieve</param>
+        /// <param name="view"> The requesting view</param>
+        public void RequestImages(int numberOfImagesRequested, IView view)
         {
-            for (int i = imagesPresent+1; i<= imagesPresent + numberOfImagesRequested; i++)
+            for (int i = _imagesRequested + 1; i<= _imagesRequested + numberOfImagesRequested; i++)
             {
                 string url = WebUtilityUrl.AssembleURL(new string[] { _urlDomain, i.ToString(), ".jpg"});
                 WebUtility.CheckIfPageExists(url, request => SatisfyRequest(request, view, url));
-                
             }
+            _imagesRequested += numberOfImagesRequested;
+
         }
 
         private void SatisfyRequest(UnityWebRequest request, IView view, string url)
