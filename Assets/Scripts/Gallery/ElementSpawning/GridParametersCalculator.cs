@@ -8,6 +8,8 @@ namespace Gallery
     public class GridParametersCalculator : MonoBehaviour, IScreenAvailableSpace
     {
         [SerializeField] private Canvas _canvas;
+        [SerializeField] private bool _forceParticularOriantationCalculation;
+        [SerializeField] private ScreenOrientation _forcedOrientation;
 
         private int _columns;
         private int _rows;
@@ -29,6 +31,7 @@ namespace Gallery
         {
             _gridLayoutGroup = GetComponent<GridLayoutGroup>();
             if (_canvas == null) _canvas = GetComponentInParent<Canvas>();
+           
         }
 
         private void Start()
@@ -39,11 +42,29 @@ namespace Gallery
 
         private void CalculateScreenParams()
         {
-            _screenWidth = (int)(Screen.width / _canvas.scaleFactor);
-            _screenHeight = (int)(Screen.height / _canvas.scaleFactor);
-
             _cellWidth = (int)_gridLayoutGroup.cellSize.x;
             _cellHeight = (int)_gridLayoutGroup.cellSize.y;
+
+            if (!_forceParticularOriantationCalculation)
+            {
+                _screenWidth = (int)(Screen.width / _canvas.scaleFactor);
+                _screenHeight = (int)(Screen.height / _canvas.scaleFactor);
+                return;
+            }
+
+            if (_forcedOrientation == ScreenOrientation.Portrait)
+            {
+                _screenWidth = Mathf.Min(Screen.width, Screen.height);
+                _screenHeight = Mathf.Max(Screen.width, Screen.height);
+                return;
+            }
+            if (_forcedOrientation == ScreenOrientation.Landscape)
+            {
+                _screenWidth = Mathf.Max(Screen.width, Screen.height);
+                _screenHeight = Mathf.Min(Screen.width, Screen.height);
+            }
+
+          
         }
 
         private void CalculateGridParameters()

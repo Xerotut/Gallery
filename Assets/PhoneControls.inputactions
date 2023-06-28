@@ -14,10 +14,18 @@
                     "interactions": ""
                 },
                 {
-                    "name": "TouchInput",
-                    "type": "PassThrough",
+                    "name": "FingerContact",
+                    "type": "Button",
                     "id": "0c49dc4c-f1a1-453c-97da-2b6dc196e287",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "FingerPosition",
+                    "type": "PassThrough",
+                    "id": "46c8ceee-fa3a-44cf-9ca4-356d6c840ace",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 }
@@ -37,11 +45,22 @@
                 {
                     "name": "",
                     "id": "388d6ae8-7bbe-406e-9d5b-0ed17609f14a",
-                    "path": "",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FingerContact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6773eb9-b549-4297-a565-ac1e3c01c99d",
+                    "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TouchInput",
+                    "action": "FingerPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Gallery
 {
-    public class SystemInputs : MonoBehaviour, ISceneInitializable
+    public class SystemInputsLocal : MonoBehaviour, ISceneInitializable
     {
 
         public void Initialize()

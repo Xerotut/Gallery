@@ -27,10 +27,18 @@ public class @PhoneControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""TouchInput"",
-                    ""type"": ""PassThrough"",
+                    ""name"": ""FingerContact"",
+                    ""type"": ""Button"",
                     ""id"": ""0c49dc4c-f1a1-453c-97da-2b6dc196e287"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""FingerPosition"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""46c8ceee-fa3a-44cf-9ca4-356d6c840ace"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -50,11 +58,22 @@ public class @PhoneControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""388d6ae8-7bbe-406e-9d5b-0ed17609f14a"",
-                    ""path"": """",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FingerContact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6773eb9-b549-4297-a565-ac1e3c01c99d"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TouchInput"",
+                    ""action"": ""FingerPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -66,7 +85,8 @@ public class @PhoneControls : IInputActionCollection, IDisposable
         // SystemActions
         m_SystemActions = asset.FindActionMap("SystemActions", throwIfNotFound: true);
         m_SystemActions_Back = m_SystemActions.FindAction("Back", throwIfNotFound: true);
-        m_SystemActions_TouchInput = m_SystemActions.FindAction("TouchInput", throwIfNotFound: true);
+        m_SystemActions_FingerContact = m_SystemActions.FindAction("FingerContact", throwIfNotFound: true);
+        m_SystemActions_FingerPosition = m_SystemActions.FindAction("FingerPosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -117,13 +137,15 @@ public class @PhoneControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_SystemActions;
     private ISystemActionsActions m_SystemActionsActionsCallbackInterface;
     private readonly InputAction m_SystemActions_Back;
-    private readonly InputAction m_SystemActions_TouchInput;
+    private readonly InputAction m_SystemActions_FingerContact;
+    private readonly InputAction m_SystemActions_FingerPosition;
     public struct SystemActionsActions
     {
         private @PhoneControls m_Wrapper;
         public SystemActionsActions(@PhoneControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Back => m_Wrapper.m_SystemActions_Back;
-        public InputAction @TouchInput => m_Wrapper.m_SystemActions_TouchInput;
+        public InputAction @FingerContact => m_Wrapper.m_SystemActions_FingerContact;
+        public InputAction @FingerPosition => m_Wrapper.m_SystemActions_FingerPosition;
         public InputActionMap Get() { return m_Wrapper.m_SystemActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,9 +158,12 @@ public class @PhoneControls : IInputActionCollection, IDisposable
                 @Back.started -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnBack;
-                @TouchInput.started -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnTouchInput;
-                @TouchInput.performed -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnTouchInput;
-                @TouchInput.canceled -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnTouchInput;
+                @FingerContact.started -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnFingerContact;
+                @FingerContact.performed -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnFingerContact;
+                @FingerContact.canceled -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnFingerContact;
+                @FingerPosition.started -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnFingerPosition;
+                @FingerPosition.performed -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnFingerPosition;
+                @FingerPosition.canceled -= m_Wrapper.m_SystemActionsActionsCallbackInterface.OnFingerPosition;
             }
             m_Wrapper.m_SystemActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -146,9 +171,12 @@ public class @PhoneControls : IInputActionCollection, IDisposable
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
-                @TouchInput.started += instance.OnTouchInput;
-                @TouchInput.performed += instance.OnTouchInput;
-                @TouchInput.canceled += instance.OnTouchInput;
+                @FingerContact.started += instance.OnFingerContact;
+                @FingerContact.performed += instance.OnFingerContact;
+                @FingerContact.canceled += instance.OnFingerContact;
+                @FingerPosition.started += instance.OnFingerPosition;
+                @FingerPosition.performed += instance.OnFingerPosition;
+                @FingerPosition.canceled += instance.OnFingerPosition;
             }
         }
     }
@@ -156,6 +184,7 @@ public class @PhoneControls : IInputActionCollection, IDisposable
     public interface ISystemActionsActions
     {
         void OnBack(InputAction.CallbackContext context);
-        void OnTouchInput(InputAction.CallbackContext context);
+        void OnFingerContact(InputAction.CallbackContext context);
+        void OnFingerPosition(InputAction.CallbackContext context);
     }
 }

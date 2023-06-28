@@ -7,10 +7,11 @@ namespace Gallery
     [CreateAssetMenu(fileName = "ActiveElementData", menuName = "Gallery/Active Element Data")]
     public class ActiveElementData : ScriptableObject
     {
+        //Used for transfering sprite between scenes.
+       
         public Sprite ElementSprite;
 
         [ field: SerializeField] public Sprite ErrorImage {get; private set;}
 
-        //Used for transfering sprite between scenes.
     }
 }

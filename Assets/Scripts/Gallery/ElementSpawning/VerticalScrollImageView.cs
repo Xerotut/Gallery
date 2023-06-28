@@ -19,18 +19,25 @@ namespace Gallery
 
         private bool _canRequest = true;
 
+        public event Action<int, IView> OnViewRequest;
+
         private void Start()
         {
-            RequestImage(_availableSpaceCalculator.ScreenOverallAvailableSpace());
             _canRequest = false;
+            _imageCollection.RegisterView(this);
+            RequestImage(_availableSpaceCalculator.ScreenOverallAvailableSpace());
+            
         }
 
 
-       
-        
+        private void Update()
+        {
+        }
+
+
         private void RequestImage(int numberOfImages)
         {
-            _imageCollection.RequestImages(numberOfImages, this);
+            OnViewRequest?.Invoke(numberOfImages, this);
         }
 
         //Since it requests image from the internet, the user experience is more smooth if an image object is spawn as soon as 
@@ -65,8 +72,8 @@ namespace Gallery
         {
             if (scrollViewPosition.y <= 0 && _canRequest)
             {
-                RequestImage(_availableSpaceCalculator.ScreenHorizontalAvailableSpace());
                 _canRequest = false;
+                RequestImage(_availableSpaceCalculator.ScreenHorizontalAvailableSpace());
             }
         }
 
