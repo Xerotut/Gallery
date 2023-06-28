@@ -24,6 +24,7 @@ namespace Gallery
                 {
                     SendRequest(request, _pendingRequests[request]);
                 }
+                _pendingRequests.Clear();
             };
         }
 

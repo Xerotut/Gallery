@@ -83,6 +83,7 @@ namespace Gallery
             else
             {
                 OnConnectionRestored?.Invoke();
+                _tryingToReconnect = false;
             }
             request.Dispose();
             
