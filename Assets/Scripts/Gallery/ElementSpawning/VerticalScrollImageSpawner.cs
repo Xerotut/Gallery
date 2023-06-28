@@ -11,7 +11,7 @@ namespace Gallery
         [SerializeField] private GridParametersCalculator _availableSpaceCalculator;
 
         [SerializeField] private GameObject _imageGameObject;
-        [SerializeField] private ImageCollection _imageCollection;
+        [SerializeField] private ImageCollectionPresenter _imageCollection;
         [SerializeField] private Transform _imageObjectsContainer;
 
 

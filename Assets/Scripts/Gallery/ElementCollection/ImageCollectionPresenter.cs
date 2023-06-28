@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 namespace Gallery
 {
     [CreateAssetMenu(fileName = "Image Collection", menuName = "Gallery/Image Collection")]
-    public class ImageCollection : ScriptableObject
+    public class ImageCollectionPresenter : ScriptableObject
     {
 
         [SerializeField] private Sprite _errorImage;

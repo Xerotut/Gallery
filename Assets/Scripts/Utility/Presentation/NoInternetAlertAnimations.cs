@@ -27,14 +27,14 @@ namespace Gallery
 
         private void OnEnable()
         {
-            WebUtility.OnConnectionLost += StartAlert;
-            WebUtility.OnConnectionRestored += StopAlert;
+            LostWebConnectionHandler.OnConnectionLost += StartAlert;
+            LostWebConnectionHandler.OnConnectionRestored += StopAlert;
         }
 
         private void OnDisable()
         {
-            WebUtility.OnConnectionLost -= StartAlert;
-            WebUtility.OnConnectionRestored -= StopAlert;
+            LostWebConnectionHandler.OnConnectionLost -= StartAlert;
+            LostWebConnectionHandler.OnConnectionRestored -= StopAlert;
         }
 
     }

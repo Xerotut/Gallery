@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -13,19 +11,25 @@ namespace Gallery
 
         public static event Action OnDownloadStart;
         public static event Action OnDownloadEnd;
-        public static event Action OnConnectionLost;
-        public static event Action OnConnectionRestored;
+        
 
         static WebUtility()
         {
             Application.quitting += AbortInProgressRequests;
             SceneManager.activeSceneChanged += HandleSceneChange;
 
-            OnConnectionLost += CheckForConnection;
+            LostWebConnectionHandler.OnConnectionRestored += () =>
+            {
+                foreach (UnityWebRequest request in _pendingRequests.Keys)
+                {
+                    SendRequest(request, _pendingRequests[request]);
+                }
+            };
         }
 
-        private readonly static HashSet<UnityWebRequest> _requests = new HashSet<UnityWebRequest>();
+        private readonly static HashSet<UnityWebRequest> _requestsInProgress = new HashSet<UnityWebRequest>();
 
+        private readonly static Dictionary<UnityWebRequest, Action<UnityWebRequest>> _pendingRequests = new Dictionary<UnityWebRequest, Action<UnityWebRequest>>();
 
         public static void CheckIfPageExists(string url, Action<UnityWebRequest> callback)
         {
@@ -51,13 +55,13 @@ namespace Gallery
                 }
 
                 request.SendWebRequest().completed += OnRequestCompleteHandler;
-                _requests.Add(request);
+                _requestsInProgress.Add(request);
             }
             catch (Exception e)
             {
                 Debug.LogError(e);
                 request.Abort();
-                if (_requests.Contains(request)) _requests.Remove(request);
+                if (_requestsInProgress.Contains(request)) _requestsInProgress.Remove(request);
                 request.Dispose();
             }
         }
@@ -66,22 +70,16 @@ namespace Gallery
         {
             UnityWebRequest request = ((UnityWebRequestAsyncOperation)operation).webRequest;
 
-            if (_requests.Contains(request))
+            if (_requestsInProgress.Contains(request))
             {
                 if (request.result != UnityWebRequest.Result.Success)
                 {
                     if (request.responseCode == 0)
                     {
-                        OnConnectionLost?.Invoke();
-                        UnityWebRequest storedRequest = new UnityWebRequest(request.url, request.method, request.downloadHandler, request.uploadHandler);
-
-                        void OnContinueRequest() 
-                        {
-                            SendRequest(storedRequest, callback);
-                            OnConnectionRestored -= OnContinueRequest;
-                        }
                         
-                        OnConnectionRestored += OnContinueRequest;
+                        UnityWebRequest storedRequest = new UnityWebRequest(request.url, request.method, request.downloadHandler, request.uploadHandler);
+                        _pendingRequests.Add(storedRequest, callback);
+                        if (!LostWebConnectionHandler.TryingToReconnect) LostWebConnectionHandler.ConnectionLost();
                         return;
                     }
                 }
@@ -92,24 +90,7 @@ namespace Gallery
            
         }
 
-        private static async void CheckForConnection()
-        {
-            await Task.Delay(2000);
-            UnityWebRequest request = new UnityWebRequest("http://data.ikppbb.com/test-task-unity-data/pics/1.jpg", "HEAD");
-            request.SendWebRequest().completed += ConnectionCheckResult;
-
-        }
-        private static void ConnectionCheckResult(AsyncOperation operation)
-        {
-            UnityWebRequest request = ((UnityWebRequestAsyncOperation)operation).webRequest;
-            if (request.responseCode == 0)
-            {
-                CheckForConnection();
-                return;
-            }
-            OnConnectionRestored?.Invoke();
-        }
-      
+       
 
         public static string AssembleURL(string[] urlparts)
         {
@@ -124,18 +105,19 @@ namespace Gallery
 
         private static void AbortInProgressRequests()
         {
-            foreach(var request in _requests)
+            foreach(var request in _requestsInProgress)
             {
                 request.Abort();
                 request.Dispose();
             }
-            _requests.Clear();
+            _requestsInProgress.Clear();
+            _pendingRequests.Clear();
         }
 
         private static void HandleFinishedRequest(UnityWebRequest request)
         {
-            if (_requests.Contains(request)) _requests.Remove(request);
-            if (_requests.Count == 0)
+            if (_requestsInProgress.Contains(request)) _requestsInProgress.Remove(request);
+            if (_requestsInProgress.Count == 0)
             {
                 OnDownloadEnd?.Invoke();
             }
