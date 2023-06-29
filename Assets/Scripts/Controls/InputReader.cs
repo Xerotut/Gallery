@@ -39,19 +39,14 @@ namespace Gallery
             _phoneControls.SystemActions.FingerContact.started += ctx => OnStartTouch?.Invoke((float)ctx.startTime);
             _phoneControls.SystemActions.FingerContact.started += ctx => OnEndTouch?.Invoke((float)ctx.startTime);
 
-            
+            _phoneControls.SystemActions.Back.performed += ctx => OnGoBack?.Invoke();
+
 
             SubscribeToSystemInputs();
         }
 
         private static void SubscribeToSystemInputs()
         {
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                _phoneControls.SystemActions.Back.performed += ctx => OnGoBack?.Invoke();
-                return;
-            }
-
             if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
                 OnSwipeRight = OnGoBack;

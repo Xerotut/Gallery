@@ -23,9 +23,6 @@ namespace Gallery
             view.OnViewRequest += RequestImages;
         }
 
-        //these 2 lists store downloaded sprites and their urls to avoid repeated download after returning to gallery from picture view.
-        private List<string> _downloadedSpritesUrl = new List<string>();
-        private List<Sprite> _downloadedSprites = new List<Sprite>();
 
         /// <summary>
         /// Function that triggers by view OnViewRequest. Made it so it firstly checks whether or not the page with the image exists
@@ -39,15 +36,9 @@ namespace Gallery
             for (int i = _imagesRequested + 1; i<= _imagesRequested + numberOfImagesRequested; i++)
             {
                 string url = WebUtilityUrl.AssembleURL(new string[] { _urlDomain, i.ToString(), ".jpg"});
-                if (!_downloadedSpritesUrl.Contains(url))
-                {
-                    WebUtility.CheckIfPageExists(url, request => SatisfyRequest(request, view, url));
-                }
-                else
-                {
-                    view.OnRequestAnswered(true);
-                    view.OnSpriteReady(_downloadedSprites[_downloadedSpritesUrl.IndexOf(url)]);
-                }
+                
+                WebUtility.CheckIfPageExists(url, request => SatisfyRequest(request, view, url));
+               
             }
             _imagesRequested += numberOfImagesRequested;
 
@@ -74,16 +65,10 @@ namespace Gallery
                 return;
             }
             Sprite newSprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            _downloadedSpritesUrl.Add(url);
-            _downloadedSprites.Add(newSprite);
             view.OnSpriteReady(newSprite);
         }
 
-        private void OnDisable()
-        {
-            _downloadedSprites.Clear();
-            _downloadedSpritesUrl.Clear();
-        }
+      
 
     }
 }
