@@ -26,13 +26,8 @@ namespace Gallery
             _canRequest = false;
             _imageCollection.RegisterView(this);
             RequestImage(_availableSpaceCalculator.ScreenOverallAvailableSpace());
-            
         }
 
-
-        private void Update()
-        {
-        }
 
 
         private void RequestImage(int numberOfImages)
