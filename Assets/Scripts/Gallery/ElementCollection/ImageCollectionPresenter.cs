@@ -27,7 +27,7 @@ namespace Gallery
         /// <summary>
         /// Function that triggers by view OnViewRequest. Made it so it firstly checks whether or not the page with the image exists
         /// and starts downloading only if it does - that allows to spawn image objects as soon as possible and fill them with images later (and also stop spawnning them
-        /// if there is no more images). To conserver traffic, it also stores all donwloaded url for future use.
+        /// if there is no more images).
         /// </summary>
         /// <param name="numberOfImagesRequested"> Number of images view wants to recieve</param>
         /// <param name="view"> The requesting view</param>
